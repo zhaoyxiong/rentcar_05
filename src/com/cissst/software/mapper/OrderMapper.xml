@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.OrderMapper">
+   
+	<!-- 添加订单操作 -->
+	<insert id="addOrder" parameterType="Order">
+		insert into t_brand(id,order_no,member_id,lease_id,rental_fee,insurance_fee,deposit_fee,illegal_fee,coupons_fee,factorage_fee,emptDrive_fee,activity_fee,pay_fee,pay_type,pay_company,pay_time,base_state,pay_state,take_state,create_time,delete_state,member_message,member_nick,canceled_message,canceled_time,isrelet,reletOrder,sourcOrder,need_invoice,overtime_charge,handler,refuse_time,receipt,reason,PLATE_NUMBER,VOUCHER_FEE) 
+		values (#{id}, #{order_no}, #{member_id}, #{lease_id}, #{rental_fee}, #{insurance_fee}, #{deposit_fee}, #{illegal_fee}, #{coupons_fee}, #{factorage_fee}, #{emptDrive_fee}, #{activity_fee}, #{pay_fee}, #{pay_type}, #{pay_company}, #{pay_time}, #{base_state}, #{pay_state}, #{take_state}, #{create_time}, #{delete_state}, #{member_message}, #{member_nick}, #{canceled_message}, #{canceled_time}, #{isrelet}, #{reletOrder}, #{sourcOrder}, #{need_invoice}, #{overtime_charge}, #{handler}, #{refuse_time}, #{receipt}, #{reason}, #{PLATE_NUMBER}, #{VOUCHER_FEE})
+	</insert>
+	
+	<!-- 查询订单全部信息 -->
+	<select id="findAll" resultType="Order">
+		select t_order.id,order_no,member_id,lease_id,rental_fee,insurance_fee,deposit_fee,illegal_fee,coupons_fee,factorage_fee,emptDrive_fee,activity_fee,pay_fee,pay_type,pay_company,pay_time,base_state,pay_state,take_state,create_time,delete_state,member_message,member_nick,canceled_message,canceled_time,isrelet,reletOrder,sourcOrder,need_invoice,overtime_charge,handler,refuse_time,receipt,reason,PLATE_NUMBER,VOUCHER_FEE,company_name
+		from t_order,t_company
+		where t_order.lease_id = t_company.id
+	</select>
+	
+	<!--查询订单条数-->
+	<select id="findOrderQuantity" resultType="int">
+		select count(*)
+		from t_order,t_company
+	where t_order.lease_id = t_company.id
+	</select>
+	
+	<!-- 按条件实现分页查询操作 -->
+  <select id="findOrderPages" resultType="Order">
+  	select t_order.id,order_no,member_id,lease_id,rental_fee,insurance_fee,deposit_fee,illegal_fee,coupons_fee,factorage_fee,emptDrive_fee,activity_fee,pay_fee,pay_type,pay_company,pay_time,base_state,pay_state,take_state,create_time,delete_state,member_message,member_nick,canceled_message,canceled_time,isrelet,reletOrder,sourcOrder,need_invoice,overtime_charge,handler,refuse_time,receipt,reason,PLATE_NUMBER,VOUCHER_FEE,company_name
+	from t_order,t_company
+	where t_order.lease_id = t_company.id
+  	limit #{offset},#{length}
+  </select>
+	
+	<!-- 根据id查询订单信息 -->
+	<select id="findOrderById" parameterType="String" resultType="Order">
+		SELECT id,order_no,member_id,lease_id,rental_fee,insurance_fee,deposit_fee,illegal_fee,coupons_fee,factorage_fee,emptDrive_fee,activity_fee,pay_fee,pay_type,pay_company,pay_time,base_state,pay_state,take_state,create_time,delete_state,member_message,member_nick,canceled_message,canceled_time,isrelet,reletOrder,sourcOrder,need_invoice,overtime_charge,handler,refuse_time,receipt,reason,PLATE_NUMBER,VOUCHER_FEE
+		FROM t_order
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 根据编号修改订单信息 -->
+	<update id="updateOrder" parameterType="Order">
+		update t_order set id=#{id}, order_no=#{order_no}, member_id=#{member_id}, lease_id=#{lease_id}, rental_fee=#{rental_fee}, insurance_fee=#{insurance_fee}, deposit_fee=#{deposit_fee}, illegal_fee=#{illegal_fee}, coupons_fee=#{coupons_fee}, factorage_fee=#{factorage_fee}, emptDrive_fee=#{emptDrive_fee}, activity_fee=#{activity_fee}, pay_fee=#{pay_fee}, pay_type=#{pay_type}, pay_company=#{pay_company}, pay_time=#{pay_time}, base_state=#{base_state}, pay_state=#{pay_state}, take_state=#{take_state}, create_time=#{create_time}, delete_state=#{delete_state}, member_message=#{member_message}, member_nick=#{member_nick}, canceled_message=#{canceled_message}, canceled_time=#{canceled_time}, isrelet=#{isrelet}, reletOrder=#{reletOrder}, sourcOrder=#{sourcOrder}, need_invoice=#{need_invoice}, overtime_charge=#{overtime_charge}, handler=#{handler}, refuse_time=#{refuse_time}, receipt=#{receipt}, reason=#{reason}, PLATE_NUMBER=#{PLATE_NUMBER}, VOUCHER_FEE=#{VOUCHER_FEE}
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 根据id删除订单信息 -->
+	<delete id="deleteById" parameterType="String">
+		delete from t_order WHERE id=#{id}
+	</delete>
+	
+	<select id="MonthByYear" parameterType="String" resultType="MonthSale">
+		SELECT DATE_FORMAT(create_time,'%m') months,SUM(pay_fee) sale FROM t_order
+		WHERE DATE_FORMAT(create_time,'%Y')= #{_parameter}
+		GROUP BY months
+	</select>
+	
+</mapper>

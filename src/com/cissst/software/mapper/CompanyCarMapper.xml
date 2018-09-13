@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.CompanyCarMapper">
+   
+	<!-- 添加操作 -->
+	<insert id="addCompanyCar" parameterType="CompanyCar">
+		insert into t_brand(id,lease_id,car_no,car_name,car_type,car_brand,car_serial,normal_price,holiday_price,special_price,gear,displacement,seating,car_quantity,plate_double,car_pic,audit_state,updown_state,car_desc,create_date,has_navigat,mileage,color) 
+		values (#{id}, #{lease_id}, #{car_no}, #{car_name}, #{car_type}, #{car_brand}, #{car_serial}, #{normal_price}, #{holiday_price}, #{special_price}, #{gear}, #{displacement}, #{seating}, #{car_quantity}, #{plate_double}, #{car_pic}, #{audit_state}, #{updown_state}, #{car_desc}, #{create_date}, #{has_navigat},#{mileage},#{color})
+	</insert>
+	
+	<!-- 查询所有公司_车辆信息 -->
+	<select id="findAll" resultType="CompanyCar">
+		select *
+		from t_company_car
+	</select>
+	
+	<!--根据动态组合条件查询数据-->
+	<select id="findComPanyCarWithCondition" resultType="CompanyCar">
+		SELECT * FROM t_company_car
+        <!--where可以自动去掉条件中的第一个and  -->
+        <where>
+                <if test="companyCar.car_brand!=null and companyCar.car_brand!=''">
+                    and car_brand=#{companyCar.car_brand}
+                </if>
+                <if test="companyCar.car_serial!=null and companyCar.car_serial!=''">
+                    and car_serial=#{companyCar.car_serial}
+                </if>
+                <if test="companyCar.car_type!=null and companyCar.car_type!=''">
+                    and car_type=#{companyCar.car_type}
+                </if>
+                <if test="companyCar.seating!=null and companyCar.seating!=''">
+                    and seating=#{companyCar.seating}
+                </if>
+                <if test="companyCar.color!=null and companyCar.color!=''">
+                    and color=#{companyCar.color}
+                </if>
+                <if test="companyCar.mileage!=null and companyCar.mileage!='' and companyCar.mileage!=6">
+                	<![CDATA[
+                		and mileage<=#{companyCar.mileage}
+                	]]>
+                </if>
+                 <if test="companyCar.mileage==6">
+                	<![CDATA[
+                		and mileage>5
+                	]]>
+                </if>
+        </where>
+        limit #{offset},#{length}
+	</select>
+	
+	<!--根据动态组合条件查询符合条件的记录数-->
+	<select id="findComPanyCarQuantityWithCondition" resultType="int">
+		SELECT count(*) FROM t_company_car
+        <!--where可以自动去掉条件中的第一个and  -->
+        <where>
+                <if test="companyCar.car_brand!=null and companyCar.car_brand!=''">
+                    and car_brand=#{companyCar.car_brand}
+                </if>
+                <if test="companyCar.car_serial!=null and companyCar.car_serial!=''">
+                    and car_serial=#{companyCar.car_serial}
+                </if>
+                <if test="companyCar.car_type!=null and companyCar.car_type!=''">
+                    and car_type=#{companyCar.car_type}
+                </if>
+                <if test="companyCar.seating!=null and companyCar.seating!=''">
+                    and seating=#{companyCar.seating}
+                </if>
+                <if test="companyCar.color!=null and companyCar.color!=''">
+                    and color=#{companyCar.color}
+                </if>
+                <if test="companyCar.mileage!=null and companyCar.mileage!='' and companyCar.mileage!=6">
+                	<![CDATA[
+                		and mileage<=#{companyCar.mileage}
+                	]]>
+                </if>
+                 <if test="companyCar.mileage==6">
+                	<![CDATA[
+                		and mileage>5
+                	]]>
+                </if>
+        </where>
+	</select>
+	
+	<!-- 根据编号查询id信息 -->
+	<select id="findCompayCarById" parameterType="String" resultType="CompanyCar">
+		SELECT *
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 根据id修改公司_车辆信息 -->
+	<update id="updateCompanyCar" parameterType="CompanyCar">
+		update t_company_car 
+		set id=#{id}, lease_id=#{lease_id}, car_no=#{car_no}, car_name=#{car_name}, car_type=#{car_type}, car_brand=#{car_brand}, car_serial=#{car_serial}, normal_price=#{normal_price}, holiday_price=#{holiday_price}, special_price=#{special_price}, gear=#{gear}, displacement=#{displacement}, seating=#{seating}, car_quantity=#{car_quantity}, plate_double=#{plate_double}, car_pic=#{car_pic}, audit_state=#{audit_state}, updown_state=#{updown_state}, car_desc=#{car_desc}, create_date=#{create_date}, has_navigat=#{has_navigat}, mileage=#{mileage}, color={color}
+		where id=#{id}
+	</update>
+	
+	<!-- 根据id删除品公司_车辆息 -->
+	<delete id="deleteById" parameterType="String">
+		delete from t_company_car where id=#{id}
+	</delete>
+	
+	<!-- 根据car_brand查找公司_车辆信息 -->
+	<select id="findCompanyCarByCarBrand" parameterType="String" resultType="CompanyCar">
+		SELECT * 
+		FROM t_company_car
+		WHERE car_brand=#{car_brand}
+	</select>
+	
+	<!-- 根据car_serial查找公司_车辆信息 -->
+	<select id="findCompanyCarByCarSerial" parameterType="String" resultType="CompanyCar">
+		SELECT * 
+		FROM t_company_car
+		WHERE car_serial=#{car_serial}
+	</select>
+	
+ </mapper>

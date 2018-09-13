@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.BrandMapper">
+   
+	<!-- 添加操作 -->
+	<insert id="addBrand" parameterType="Brand">
+		insert into t_brand(id,brand_code,brand_name,brand_pic,brand_url,create_date,brand_py) 
+		values (#{id},#{brand_code},#{brand_name},#{brand_pic},#{brand_url},sysdate(),#{brand_py})
+	</insert>
+	
+	<!-- 查询品牌全部信息 -->
+	<select id="findAll" resultType="Brand">
+		select id,brand_code,brand_name,brand_pic,brand_url,create_date,brand_py from t_brand
+	</select>
+	
+	<!-- 根据编号查询品牌信息 -->
+	<select id="findBrandById" parameterType="String" resultType="Brand">
+		SELECT id,brand_code,brand_name,brand_pic,brand_url,create_date,brand_py FROM t_brand
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 根据编号修改品牌信息 -->
+	<update id="updateBrand" parameterType="Brand">
+		update t_brand set brand_code=#{brand_code},brand_name=#{brand_name},brand_pic=#{brand_pic},brand_url=#{brand_url},brand_py=#{brand_py}
+		where id=#{id}
+	</update>
+	
+	<!-- 根据id删除品牌信息 -->
+	<delete id="deleteById" parameterType="String">
+		delete from t_brand where id=#{id}
+	</delete>
+	
+	<!-- 根据brand_code删除品牌信息 -->
+	<select id="findBrandByBrandCode" parameterType="String" resultType="Brand">
+		SELECT id,brand_code,brand_name,brand_pic,brand_url,create_date,brand_py FROM t_brand
+		WHERE brand_code=#{brand_code}
+	</select>
+</mapper>

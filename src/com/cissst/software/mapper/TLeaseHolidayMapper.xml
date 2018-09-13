@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.TLeaseHolidayMapper">
+	
+	<!-- 添加操作，使用xml配置文件实现连接数据库 -->
+	<insert id="addTLeaseHoliday" parameterType="TLeaseHoliday" keyProperty="id" useGeneratedKeys="true">
+		insert into t_lease_holidy(id,lease_id,holiday,holiday_type,create_date)
+		values (#{id},#{lease_id},#{holiday},#{holiday_type},#{create_date})
+	</insert>
+	
+	<!-- 查询用户全部信息 -->
+	<select id="findAll" resultType="TLeaseHoliday">
+		select id,lease_id,holiday,holiday_type,create_date from t_lease_holidy
+	</select>
+	<!-- 2.查询（由于类属性与数据库属性完全对应，所以不需要做以下的操作） -->
+	<resultMap type="com.cissst.software.model.TLeaseHoliday" id="tlHolidaymapper">
+		<id column="id" property="id"/>
+		<result column="lease_id" property="lease_id"/>
+		<result column="holiday" property="holiday"/>
+		<result column="holiday_type" property="holiday_type"/>
+		<result column="create_date" property="create_date"/>
+	</resultMap>
+	<select id="findAllTables" resultMap="tlHolidaymapper">
+		select id,lease_id,holiday,holiday_type,create_date from t_lease_holidy
+	</select>
+	
+	<!-- 根据编号删除用户信息 -->
+	<delete id="deleteById" parameterType="String">
+		delete from t_lease_holidy where id=#{id}
+	</delete>
+</mapper>

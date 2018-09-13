@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.SerialMapper">
+   
+	<!-- 添加系列操作 -->
+	<insert id="addSerial" parameterType="Serial">
+		insert into t_car_serial(id,brand_code,serial_code,serial_name,create_date) values (#{id},#{brand_code},#{serial_code},#{serial_name},sysdate())
+	</insert>
+	
+	<!-- 查询系列全部信息 -->
+	<select id="findAll" resultType="Serial">
+		select id,brand_code,serial_code,serial_name,create_date from t_car_serial
+	</select>
+	
+	<!-- 根据编号查询系列信息 -->
+	<select id="findSerialById" parameterType="String" resultType="Serial">
+		SELECT id,brand_code,serial_code,serial_name,create_date from t_car_serial
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 根据编号修改系列信息 -->
+	<update id="updateSerial" parameterType="Serial">
+		update t_car_serial set brand_code=#{brand_code},serial_code=#{serial_code},serial_name=#{serial_name}
+		where id=#{id}
+	</update>
+	
+	<!-- 根据编号删除系列信息 -->
+	<delete id="deleteById" parameterType="String">
+		delete from t_car_serial where id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.OrderCarMapper">
+   
+	<!-- 添加订单_车辆信息 -->
+	<insert id="addOrder" parameterType="OrderCar">
+		insert into t_order_car(id,member_id,lease_id,lease_Name,order_no,car_id,car_name,car_no,car_type,car_type_name,car_brand,car_brand_name,car_serial,car_serial_name,gear,gear_name,displacement,seating,plate_DOUBLE,car_pic,order_start_time,order_end_time,tack_address_id,tack_address,return_address_id,return_address,normal_price,holiday_price,special_price,feeDetail)
+		values (#{id}, #{member_id}, #{lease_id}, #{lease_Name}, #{order_no}, #{car_id}, #{car_name}, #{car_no}, #{car_type}, #{car_type_name}, #{car_brand}, #{car_brand_name}, #{car_serial}, #{car_serial_name}, #{gear}, #{gear_name}, #{displacement}, #{seating}, #{plate_DOUBLE}, #{car_pic}, #{order_start_time}, #{order_end_time}, #{tack_address_id}, #{tack_address}, #{return_address_id}, #{return_address}, #{normal_price}, #{holiday_price}, #{special_price}, #{feeDetail})
+	</insert>
+	
+	<!-- 根据order_no查询一个订单中所有订单_车辆信息 -->
+	<select id="findOrderCarByOrderNo" resultType="OrderCar" parameterType="String">
+		select id,member_id,lease_id,lease_Name,order_no,car_id,car_name,car_no,car_type,car_type_name,car_brand,car_brand_name,car_serial,car_serial_name,gear,gear_name,displacement,seating,plate_DOUBLE,car_pic,order_start_time,order_end_time,tack_address_id,tack_address,return_address_id,return_address,normal_price,holiday_price,special_price,feeDetail
+		from t_order_car
+		where order_no = #{order_no}
+	</select>
+	
+	<!-- 根据id查询订单_车辆信息 -->
+	<select id="findOrderCarById" parameterType="String" resultType="OrderCar">
+		SELECT id,member_id,lease_id,lease_Name,order_no,car_id,car_name,car_no,car_type,car_type_name,car_brand,car_brand_name,car_serial,car_serial_name,gear,gear_name,displacement,seating,plate_DOUBLE,car_pic,order_start_time,order_end_time,tack_address_id,tack_address,return_address_id,return_address,normal_price,holiday_price,special_price,feeDetail
+		FROM t_order_car
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 根据id修改订单_车辆信息 -->
+	<update id="updateOrderCarById" parameterType="OrderCar">
+		update t_order_car set id=#{id}, member_id=#{member_id}, lease_id=#{lease_id}, lease_Name=#{lease_Name}, order_no=#{order_no}, car_id=#{car_id}, car_name=#{car_name}, car_no=#{car_no}, car_type=#{car_type}, car_type_name=#{car_type_name}, car_brand=#{car_brand}, car_brand_name=#{car_brand_name}, car_serial=#{car_serial}, car_serial_name=#{car_serial_name}, gear=#{gear}, gear_name=#{gear_name}, displacement=#{displacement}, seating=#{seating}, plate_DOUBLE=#{plate_DOUBLE}, car_pic=#{car_pic}, order_start_time=#{order_start_time}, order_end_time=#{order_end_time}, tack_address_id=#{tack_address_id}, tack_address=#{tack_address}, return_address_id=#{return_address_id}, return_address=#{return_address}, normal_price=#{normal_price}, holiday_price=#{holiday_price}, special_price=#{special_price}, feeDetail=#{feeDetail}
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 根据order_no删除一个订单的所有订单_车辆信息 -->
+	<delete id="deleteOrderCarByOrderNo" parameterType="String">
+		delete from t_order_car WHERE order_no=#{order_no}
+	</delete>
+	
+	<!-- 根据id删除订单_车辆信息 -->
+	<delete id="deleteOrderCarById" parameterType="String">
+		delete from t_order_car WHERE id=#{id}
+	</delete>
+	
+</mapper>

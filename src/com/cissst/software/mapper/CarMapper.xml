@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.CarMapper">
+   
+	<!-- 添加操作 -->
+	<insert id="addCar" parameterType="Car">
+		insert into t_company_car(id,lease_id,car_no,car_brand,car_serial,normal_price,holiday_price,special_price,seating,car_pic,audit_state,updown_state,has_navigat,car_desc,create_date)
+		 values (#{id},#{lease_id},#{car_no},#{car_brand},#{car_serial},#{normal_price},#{holiday_price},#{special_price},#{seating},#{car_pic},#{audit_state},#{updown_state},#{has_navigat},#{car_desc},#{create_date})
+	</insert>
+	
+	
+	<select id="findById" resultType="Car" parameterType="String">
+		select * from t_company_car where id=#{_parameter}
+	</select>
+	
+	<delete id="deleteCar" parameterType="String">
+		delete from t_company_car where id=#{_parameter}
+	</delete>
+	
+	<update id="updateCar" parameterType="Car">
+		update t_company_car set lease_id=#{lease_id},car_no=#{car_no},car_brand=#{car_brand},car_serial=#{car_serial},normal_price=#{normal_price},holiday_price=#{holiday_price},
+		special_price=#{special_price},seating=#{seating},audit_state=#{audit_state},updown_state=#{updown_state},
+		has_navigat=#{has_navigat},car_desc=#{car_desc} where id=#{id}
+	</update>
+	
+	<select id="findBrandName" resultType="String" parameterType="String">
+		select brand_name from t_brand where brand_code=#{_parameter}
+	</select>
+	
+	
+	<resultMap type="com.cissst.software.model.Car" id="carmapper">
+		<id column="id" property="id"/>
+		<result column="lease_id" property="lease_id"/>
+		<result column="car_no" property="car_no"/>
+		<result column="car_name" property="car_name"/>
+		<result column="car_type" property="car_type"/>
+		<result column="car_brand" property="car_brand"/>
+		<result column="car_serial" property="car_serial"/>
+		<result column="normal_price" property="normal_price"/>
+		<result column="holiday_price" property="holiday_price"/>
+		<result column="special_price" property="special_price"/>
+		<result column="seating" property="seating"/>
+		<result column="car_pic" property="car_pic"/>
+		<result column="audit_state" property="audit_state"/>
+		<result column="updown_state" property="updown_state"/>
+		<result column="car_desc" property="car_desc"/>
+		<result column="has_navigat" property="has_navigat"/>
+		<!-- 多对一的设置 -->
+		<association property="company" javaType="com.cissst.software.model.Company">
+			<id column="id" property="id"/>
+			<result column="company_name" property="company_name"/>
+		</association>
+	</resultMap>
+	
+	<select id="findAllTables" resultMap="carmapper">
+	<!-- select * from t_company_car c,t_company t
+		where c.lease_id = t.id -->
+		select c.id, c.car_pic,t.company_name ,c.car_no,c.car_name,c.car_brand,c.car_serial,c.normal_price,c.holiday_price,c.special_price
+		from t_company_car c,t_company t
+		where c.lease_id = t.id
+	</select>
+	
+	
+	
+</mapper>

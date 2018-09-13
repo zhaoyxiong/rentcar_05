@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.TMemberMapper">
+	
+	<!-- 添加操作，使用xml配置文件实现连接数据库 -->
+	<insert id="addTMember" parameterType="TMember" keyProperty="id" useGeneratedKeys="true">
+		insert into t_member(id,member_name,login_name,member_pwd,gender,
+			id_card,mobile_phone,email,province,city,area,address,member_type)
+		values (#{id},#{member_name},#{login_name},#{member_pwd},#{gender},
+			#{id_card},#{mobile_phone},#{email},#{province},#{city},#{area},#{address},#{member_type})
+	</insert>
+	
+	<!-- 根据编号删除用户信息 -->
+	<delete id="deleteById" parameterType="String">
+		delete from t_member where id=#{id}
+	</delete>
+
+	<!-- 根据用户编号修改用户记录 -->
+	<update id="updateTMember" parameterType="TMember">
+		update tbl_user
+			set member_name=#{member_name},login_name=#{login_name},member_pwd=#{member_pwd},
+			gender=#{gender},id_card=#{id_card},mobile_phone=#{mobile_phone},email=#{email},
+			province=#{province},city=#{city},area=#{area},address=#{address},member_type=#{member_type}
+		where id=#{id}
+	</update>
+	
+	<!-- 查询用户全部信息 -->
+	<select id="findAll" resultType="TMember">
+		select id,member_name,login_name,member_pwd,gender,
+			id_card,mobile_phone,email,province,city,area,address,member_type
+		from t_member
+	</select>
+	
+	<!-- 根据编号查询用户信息 -->
+	<select id="findTMemberById" parameterType="String" resultType="TMember">
+		select member_name,login_name,member_pwd,gender,
+			id_card,mobile_phone,email,province,city,area,address,member_type
+		from t_member
+		where id=#{id}
+	</select>
+</mapper>

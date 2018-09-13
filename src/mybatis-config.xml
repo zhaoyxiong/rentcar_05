@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.cissst.software.model" />
+    </typeAliases>
+	<plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- config params as the following -->
+            <!--<!–分页参数合理化  –>-->
+            <property name="reasonable" value="true"/>
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+</configuration>

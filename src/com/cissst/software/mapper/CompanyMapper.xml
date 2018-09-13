@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cissst.software.mapper.CompanyMapper">
+
+   <!-- 查询操作 -->
+<select id="findAll" resultType="Company">
+select * from t_company where del_state!=1
+</select>
+	<!-- 添加操作 -->
+<insert id="addCompany" parameterType="Company"  >
+	insert into t_company values(#{id},#{company_name},#{lease_name},#{telephone},#{mobile_phone},#{address},#{mail},#{open_bank},#{bank_account},#{remark},#{audit_state},#{enabled},#{del_state},#{create_date},#{car_desc},#{AREA},#{fault_name},#{fault_phone})
+</insert>
+<!-- 删除操作 -->
+  <delete id="deleteCompanyByID" parameterType="String">
+  update t_company set del_state=1 where id=#{_parameter}
+ 
+  </delete>
+  <!-- 更新 -->
+ <update id="updateCompany" parameterType="Company">
+ 
+  update t_company set company_name=#{company_name},lease_name=#{lease_name},telephone=#{telephone},mobile_phone=#{mobile_phone},address=#{address},mail=#{mail},open_bank=#{open_bank},bank_account=#{bank_account},remark=#{remark} where id=#{id}
+ </update>
+</mapper>

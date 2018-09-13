@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cissst.software.mapper.DischargeStatisticMapper">
+
+	<!-- 添加操作 -->
+	<insert id="addDischargeStatistic" parameterType="DischargeStatistic">
+		insert into t_discharge_statistic(id,user_id,time,ip) 
+		values (#{id},#{user_id},sysdate(),#{ip})
+	</insert>
+	
+	<!-- 查询所有流量统计信息 -->
+	<select id="findDischargeStatistic" resultType="DischargeStatistic">
+		select *
+		from t_discharge_statistic
+	</select>
+	
+	<!-- 查询某日的PV -->
+	<select id="finddayPV" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM t_discharge_statistic
+		WHERE ${day} = (TO_DAYS(TIME)-TO_DAYS('1970-01-01'))
+	</select>
+</mapper>
